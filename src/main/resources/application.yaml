@@ -1,0 +1,9 @@
+spring:
+    datasource:
+        driverClassName: "org.postgresql.Driver"
+        url: "jdbc:postgresql://jourdan-db-instance.cxsdylqidu36.us-east-1.rds.amazonaws.com:5432/postgres?currentSchema=novels"
+        username: "postgres"
+        password: "Pokemon14!"
+    jpa:
+        database-platform: "org.hibernate.dialect.PostgreSQL10Dialect"
+        generate-ddl: "true"
