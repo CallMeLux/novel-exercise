@@ -26,8 +26,7 @@ public interface NovelRepository extends CrudRepository<Novel, String> {
     @Query(value = "from Novel where char_name = :char_name")
     Optional<Novel> findByCharacter(String char_name);
 
-    @Query(value = "from Novel where amountOfCharacters = :amountofcharacters")
-    Iterable<Integer> checkAmountOfCharacters(int amountOfCharacters);
+
 
     @Override
     boolean existsById(String s);

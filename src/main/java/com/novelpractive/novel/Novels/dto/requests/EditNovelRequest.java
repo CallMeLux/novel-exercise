@@ -15,5 +15,6 @@ public class EditNovelRequest {
     private String author;
     private String genre;
     private String char_name;
+    private int amountOfCharacters = 0;
 
 }
