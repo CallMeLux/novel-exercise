@@ -14,5 +14,6 @@ public class NewNovelRequest {
     private String author;
     private String genre;
     private String char_name;
+    private int amountOfCharacters = 0;
 
 }

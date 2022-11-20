@@ -30,13 +30,16 @@ public class Novel {
     @Column(name = "char_name")
     private String char_name;
 
+    @Column(name = "amountOfCharacters")
+    private int amountOfCharacters = 0;
+
 
     public Novel(NewNovelRequest newNovelRequest){
         this.novel_title = newNovelRequest.getNovel_title();
         this.author = newNovelRequest.getAuthor();
         this.genre = newNovelRequest.getGenre();
         this.char_name = newNovelRequest.getChar_name();
-
+        this.amountOfCharacters = newNovelRequest.getAmountOfCharacters();
     }
 
 }
