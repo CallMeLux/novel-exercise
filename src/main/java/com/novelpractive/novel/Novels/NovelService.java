@@ -5,10 +5,15 @@ import com.novelpractive.novel.Novels.dto.requests.EditNovelRequest;
 import com.novelpractive.novel.Novels.dto.requests.NewNovelRequest;
 import com.novelpractive.novel.Novels.dto.response.NovelResponse;
 import com.novelpractive.novel.Novels.util.InvalidUserInputException;
+import com.novelpractive.novel.Novels.util.ResourceNotFoundException;
 import com.novelpractive.novel.Novels.util.ResourceNotPersistedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NovelService {
@@ -20,12 +25,21 @@ public class NovelService {
     @Transactional
     public NovelResponse NewNovel(NewNovelRequest newNovelRequest){
 
+
+        //submit to repository
+
         Novel newNovel = new Novel(newNovelRequest);
         newNovel.setNovel_title(newNovel.getNovel_title());
         newNovel.setGenre(newNovel.getGenre());
         newNovel.setAuthor(newNovel.getAuthor());
         newNovel.setChar_name(newNovel.getChar_name());
         newNovel.setAmountOfCharacters(newNovel.getAmountOfCharacters());
+
+        newNovel = novelRepository.save(newNovel);
+
+        if(newNovel == null){
+            throw new ResourceNotFoundException("Registration of the Novel Failed.");
+        }
 
 
         //validations
@@ -40,8 +54,8 @@ public class NovelService {
         //add or update more characters in another function that can limit it to three.
 
 
+        return new NovelResponse(newNovel);
 
-        
 
     }//end of novel response
 
@@ -92,6 +106,29 @@ public class NovelService {
 
 
     }//end update
+
+
+    @Transactional(readOnly = true)
+    public List<NovelResponse> findAll(){
+        return ((Collection<Novel>) novelRepository.findAll())
+                .stream()
+                .map(NovelResponse::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public NovelResponse findById(String novel_title) {
+        Novel foundNovel = novelRepository.findById(novel_title).orElseThrow(() -> new ResourceNotFoundException("No user found with this ID."));
+        NovelResponse novelResponse = new NovelResponse(foundNovel);
+        return novelResponse;
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<NovelResponse> findNovelByCharacter(String char_name){
+        return ((Collection<Novel>) novelRepository.findByCharacter(char_name)).stream().map(NovelResponse::new).collect(Collectors.toList());
+    }
+
 
 
 

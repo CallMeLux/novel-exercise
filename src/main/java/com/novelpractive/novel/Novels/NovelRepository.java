@@ -24,7 +24,7 @@ public interface NovelRepository extends CrudRepository<Novel, String> {
     Optional<String> checkCharacter(String char_name);
 
     @Query(value = "from Novel where char_name = :char_name")
-    Optional<Novel> findByCharacter(String char_name);
+    Iterable<Novel> findByCharacter(String char_name);
 
 
 
