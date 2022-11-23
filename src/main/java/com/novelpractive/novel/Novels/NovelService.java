@@ -29,6 +29,7 @@ public class NovelService {
         //submit to repository
 
         Novel newNovel = new Novel(newNovelRequest);
+
         newNovel.setNovel_title(newNovel.getNovel_title());
         newNovel.setGenre(newNovel.getGenre());
         newNovel.setAuthor(newNovel.getAuthor());
@@ -38,9 +39,12 @@ public class NovelService {
         newNovel = novelRepository.save(newNovel);
 
         if(newNovel == null){
-            throw new ResourceNotFoundException("Registration of the Novel Failed.");
+            throw new ResourceNotPersistedException("Registration of the Novel Failed.");
         }
 
+        if(newNovel.getAmountOfCharacters() > 3){
+            throw new ResourceNotPersistedException("Too many characters!");
+        }
 
         //validations
 
@@ -81,7 +85,7 @@ public class NovelService {
 
         Novel novel = novelRepository.checkTitle(editNovelRequest.getNovel_title()).orElseThrow(() -> new InvalidUserInputException("Novel not found."));
 
-        if (editNovelRequest.getNovel_title() != null){
+        if(editNovelRequest.getNovel_title() != null){
             if(isTitleAvailable(editNovelRequest.getNovel_title())){
                 novel.setNovel_title(editNovelRequest.getNovel_title());
             }
@@ -118,7 +122,7 @@ public class NovelService {
 
     @Transactional(readOnly = true)
     public NovelResponse findById(String novel_title) {
-        Novel foundNovel = novelRepository.findById(novel_title).orElseThrow(() -> new ResourceNotFoundException("No user found with this ID."));
+        Novel foundNovel = novelRepository.findById(novel_title).orElseThrow(() -> new ResourceNotFoundException("No Novel found with this title."));
         NovelResponse novelResponse = new NovelResponse(foundNovel);
         return novelResponse;
     }

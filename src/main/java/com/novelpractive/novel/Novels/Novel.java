@@ -6,10 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,14 +25,14 @@ public class Novel {
     @Column(name = "genre")
     private String genre;
 
-    //change this to many to one and the type as Character
-    @Column(name = "char_name")
-    private String char_name;
+    //change this to one to many and the type as Character
+    @OneToMany(mappedBy = "char_name", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Character> characters;
 
     @Column(name = "amountOfCharacters")
     private int amountOfCharacters = 0;
 
-
+    //change the request and responses to match the new data types and information from character model.
     public Novel(NewNovelRequest newNovelRequest){
         this.novel_title = newNovelRequest.getNovel_title();
         this.author = newNovelRequest.getAuthor();
