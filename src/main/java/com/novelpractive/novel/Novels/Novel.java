@@ -27,6 +27,7 @@ public class Novel {
     @Column(name = "genre")
     private String genre;
 
+    //change this to many to one and the type as Character
     @Column(name = "char_name")
     private String char_name;
 

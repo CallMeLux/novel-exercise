@@ -1,4 +1,4 @@
-package com.novelpractive.novel.Novels.util;
+package com.novelpractive.novel.util;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(){}

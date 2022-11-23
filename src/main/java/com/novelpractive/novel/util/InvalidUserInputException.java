@@ -1,4 +1,4 @@
-package com.novelpractive.novel.Novels.util;
+package com.novelpractive.novel.util;
 
 public class InvalidUserInputException extends RuntimeException {
     public InvalidUserInputException(){}
