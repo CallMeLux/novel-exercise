@@ -1,7 +1,7 @@
 package com.novelpractive.novel.Novels;
 
 
-import com.novelpractive.novel.Characters.Character;
+import com.novelpractive.novel.Characters.Characters;
 import com.novelpractive.novel.Novels.dto.requests.EditNovelRequest;
 import com.novelpractive.novel.Novels.dto.requests.NewNovelRequest;
 import com.novelpractive.novel.Novels.dto.response.NovelResponse;
@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,10 +35,9 @@ public class NovelService {
         newNovel.setNovel_title(newNovel.getNovel_title());
         newNovel.setGenre(newNovel.getGenre());
         newNovel.setAuthor(newNovel.getAuthor());
-        //newNovel.setCharacter(newNovel.getCharacter());
+        //newNovel.setCharacters(newNovel.getCharacters());
         newNovel.setAmountOfCharacters(newNovel.getAmountOfCharacters());
 
-        newNovel = novelRepository.save(newNovel);
 
         if(newNovel == null){
             throw new ResourceNotPersistedException("Registration of the Novel Failed.");
@@ -59,7 +59,8 @@ public class NovelService {
         //add or update more characters in another function that can limit it to three.
 
 
-        return new NovelResponse(newNovel);
+
+        return new NovelResponse(novelRepository.save(newNovel));
 
 
     }//end of novel response
@@ -101,9 +102,9 @@ public class NovelService {
             novel.setGenre(editNovelRequest.getGenre());
         }
 
-        if(editNovelRequest.getCharacter() != null){
-            novel.setCharacter((editNovelRequest.getCharacter()));
-        }
+//        if(editNovelRequest.getCharacters() != null){
+//            novel.setCharacters((Set<Characters>) editNovelRequest.getCharacters());
+//        }
 
         if(editNovelRequest.getAmountOfCharacters() != 0 && editNovelRequest.getAmountOfCharacters() < 4){
             novel.setAmountOfCharacters(editNovelRequest.getAmountOfCharacters());

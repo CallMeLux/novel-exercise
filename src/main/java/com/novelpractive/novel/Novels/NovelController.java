@@ -1,6 +1,5 @@
 package com.novelpractive.novel.Novels;
 
-import com.novelpractive.novel.Characters.Character;
 import com.novelpractive.novel.Novels.dto.requests.EditNovelRequest;
 import com.novelpractive.novel.Novels.dto.requests.NewNovelRequest;
 import com.novelpractive.novel.Novels.dto.response.NovelResponse;

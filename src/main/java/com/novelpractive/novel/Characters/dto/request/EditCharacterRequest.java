@@ -1,7 +1,6 @@
 package com.novelpractive.novel.Characters.dto.request;
 
 
-import com.novelpractive.novel.Characters.Character;
 import com.novelpractive.novel.Novels.Novel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

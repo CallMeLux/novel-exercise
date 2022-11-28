@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Entity
 @Table(name = "fictional_character")
-public class Character {
+public class Characters {
 
     @Id
     @Column(name = "char_name")
@@ -24,15 +24,15 @@ public class Character {
     @Column(name = "char_age")
     private int char_age;
 
-    @NotNull
+
     @Column(name = "occupation")
     private String occupation;
 
-    @NotNull
+
     @Column(name = "char_likes")
     private String char_likes;
 
-    @NotNull
+
     @Column(name = "char_dislikes")
     private String char_dislikes;
 
@@ -41,7 +41,7 @@ public class Character {
     private Novel novel;
 
 
-    public Character(NewCharacterRequest newCharacterRequest){
+    public Characters(NewCharacterRequest newCharacterRequest){
 
         this.char_name = newCharacterRequest.getChar_name();
         this.char_age = newCharacterRequest.getChar_age();

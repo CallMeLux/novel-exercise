@@ -1,12 +1,15 @@
 package com.novelpractive.novel.Novels;
 
 
+import com.novelpractive.novel.Characters.Characters;
 import com.novelpractive.novel.Novels.dto.requests.NewNovelRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -24,21 +27,23 @@ public class Novel {
     @Column(name = "genre")
     private String genre;
 
-    //change this to one to many and the type as Character
+    //change this to one to many and the type as Characters
     @OneToMany
     @JoinColumn(name = "char_name")
-    private Character character;
+    private Set<Characters> characters;
+    @NotNull
+    @Column(name = "amount_of_characters")
+    private int amountOfCharacters;
 
-    @Column(name = "amountOfCharacters")
-    private int amountOfCharacters = 0;
-
-    //change the request and responses to match the new data types and information from character model.
+    //change the request and responses to match the new data types and information from characters model.
     public Novel(NewNovelRequest newNovelRequest){
         this.novel_title = newNovelRequest.getNovel_title();
         this.author = newNovelRequest.getAuthor();
         this.genre = newNovelRequest.getGenre();
-        this.character = newNovelRequest.getCharacter();
+        this.characters = (Set<Characters>) newNovelRequest.getCharacters();
         this.amountOfCharacters = newNovelRequest.getAmountOfCharacters();
     }
+
+
 
 }

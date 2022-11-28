@@ -3,8 +3,6 @@ package com.novelpractive.novel.Characters;
 import com.novelpractive.novel.Characters.dto.request.EditCharacterRequest;
 import com.novelpractive.novel.Characters.dto.request.NewCharacterRequest;
 import com.novelpractive.novel.Characters.dto.response.CharacterResponse;
-import com.novelpractive.novel.Novels.Novel;
-import com.novelpractive.novel.Novels.dto.response.NovelResponse;
 import com.novelpractive.novel.util.InvalidUserInputException;
 import com.novelpractive.novel.util.ResourceNotFoundException;
 import com.novelpractive.novel.util.ResourceNotPersistedException;
@@ -29,21 +27,18 @@ public class CharacterService {
 
         //submit to repository
 
-        Character newCharacter = new Character(newCharacterRequest);
+        Characters newCharacters = new Characters(newCharacterRequest);
 
-        newCharacter.setChar_name(newCharacter.getChar_name());
-        newCharacter.setChar_age(newCharacter.getChar_age());
-        newCharacter.setOccupation(newCharacter.getOccupation());
-        newCharacter.setChar_likes(newCharacter.getChar_likes());
-        newCharacter.setChar_dislikes(newCharacter.getChar_dislikes());
-        newCharacter.setNovel(newCharacter.getNovel());
+        newCharacters.setChar_name(newCharacters.getChar_name());
+        newCharacters.setChar_age(newCharacters.getChar_age());
+        newCharacters.setOccupation(newCharacters.getOccupation());
+        newCharacters.setChar_likes(newCharacters.getChar_likes());
+        newCharacters.setChar_dislikes(newCharacters.getChar_dislikes());
+        newCharacters.setNovel(newCharacters.getNovel());
 
-        newCharacter = characterRepository.save(newCharacter);
-
-        if(newCharacter == null){
-            throw new ResourceNotPersistedException("Character was not created.");
+        if(newCharacters == null){
+            throw new ResourceNotPersistedException("Characters was not created.");
         }
-
 
 
         //validations
@@ -51,7 +46,8 @@ public class CharacterService {
         isCharacterAvailable(newCharacterRequest.getChar_name());
         isNovelPresent(String.valueOf(newCharacterRequest.getNovel()));
 
-        return new CharacterResponse(newCharacter);
+
+        return new CharacterResponse(characterRepository.save(newCharacters));
 
     }//end of response
 
@@ -75,43 +71,43 @@ public class CharacterService {
 
     @Transactional
     public void remove(String char_name){
-        Character character= characterRepository.findByName(char_name).orElseThrow(() -> new InvalidUserInputException("Character not found."));
-        characterRepository.save(character);
+        Characters characters = characterRepository.findByName(char_name).orElseThrow(() -> new InvalidUserInputException("Characters not found."));
+        characterRepository.save(characters);
     }//end remove
 
 
     @Transactional
     public void update(EditCharacterRequest editCharacterRequest){
 
-        Character character = characterRepository.findByName(editCharacterRequest.getChar_name()).orElseThrow(() -> new InvalidUserInputException("Character not found."));
+        Characters characters = characterRepository.findByName(editCharacterRequest.getChar_name()).orElseThrow(() -> new InvalidUserInputException("Characters not found."));
 
         if(editCharacterRequest.getChar_name() != null){
             if(isCharacterAvailable(editCharacterRequest.getChar_name())){
-                character.setChar_name(editCharacterRequest.getChar_name());
+                characters.setChar_name(editCharacterRequest.getChar_name());
             }
         }
 
         if(editCharacterRequest.getChar_age() != 0){
-            character.setChar_age(editCharacterRequest.getChar_age());
+            characters.setChar_age(editCharacterRequest.getChar_age());
         }
 
         if(editCharacterRequest.getOccupation() != null){
-            character.setOccupation(editCharacterRequest.getOccupation());
+            characters.setOccupation(editCharacterRequest.getOccupation());
         }
 
         if(editCharacterRequest.getChar_likes() != null){
-            character.setChar_likes(editCharacterRequest.getChar_likes());
+            characters.setChar_likes(editCharacterRequest.getChar_likes());
         }
 
         if(editCharacterRequest.getChar_dislikes() != null){
-            character.setChar_dislikes(editCharacterRequest.getChar_dislikes());
+            characters.setChar_dislikes(editCharacterRequest.getChar_dislikes());
         }
 
     }//end update
 
     @Transactional(readOnly = true)
     public List<CharacterResponse> findAll(){
-        return ((Collection<Character>) characterRepository.findAll())
+        return ((Collection<Characters>) characterRepository.findAll())
                 .stream()
                 .map(CharacterResponse::new)
                 .collect(Collectors.toList());
@@ -120,15 +116,15 @@ public class CharacterService {
 
     @Transactional(readOnly = true)
     public CharacterResponse findById(String char_name) {
-        Character foundCharacter = characterRepository.findById(char_name).orElseThrow(() -> new ResourceNotFoundException("No Character found with this name."));
-        CharacterResponse characterResponse = new CharacterResponse(foundCharacter);
+        Characters foundCharacters = characterRepository.findById(char_name).orElseThrow(() -> new ResourceNotFoundException("No Characters found with this name."));
+        CharacterResponse characterResponse = new CharacterResponse(foundCharacters);
         return characterResponse;
     }
 
 
     @Transactional(readOnly = true)
     public List<CharacterResponse> findCharacterByNovel(String novel_title){
-        return ((Collection<Character>) characterRepository.findByNovel(novel_title)).stream().map(CharacterResponse::new).collect(Collectors.toList());
+        return characterRepository.findByNovel(novel_title);
     }
 
 }//end of class

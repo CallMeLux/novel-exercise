@@ -1,5 +1,6 @@
 package com.novelpractive.novel.Novels.dto.response;
 
+import com.novelpractive.novel.Characters.Characters;
 import com.novelpractive.novel.Novels.Novel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,13 +11,15 @@ public class NovelResponse {
     private String novel_title;
     private String author;
     private String genre;
-    private Character character;
+    //private Characters characters;
+    private int amountOfCharacters;
 
     public NovelResponse(Novel novel){
         this.novel_title = novel.getNovel_title();
         this.author = novel.getAuthor();
         this.genre = novel.getGenre();
-        this.character = novel.getCharacter();
+        //this.characters = (Characters) novel.getCharacters();
+        this.amountOfCharacters = novel.getAmountOfCharacters();
     }
 
 }

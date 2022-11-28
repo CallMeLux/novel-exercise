@@ -36,13 +36,13 @@ public class CharacterController {
     @PutMapping
     public String update(@RequestBody EditCharacterRequest editCharacterRequest){
         characterService.update(editCharacterRequest);
-        return "Character was updated.";
+        return "Characters was updated.";
     }
 
     @DeleteMapping("delete/{char_name}")
     public String delete(@PathVariable String char_name){
         characterService.remove(char_name);
-        return "Character has been removed.";
+        return "Characters has been removed.";
     }
 
     @GetMapping

@@ -6,4 +6,7 @@ spring:
         password: "Pokemon14!"
     jpa:
         database-platform: "org.hibernate.dialect.PostgreSQL10Dialect"
+        show-sql: "true"
         generate-ddl: "true"
+        hibernate:
+            ddl-auto: "create"

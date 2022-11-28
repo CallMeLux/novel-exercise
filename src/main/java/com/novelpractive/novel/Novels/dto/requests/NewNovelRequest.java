@@ -1,6 +1,7 @@
 package com.novelpractive.novel.Novels.dto.requests;
 
 
+import com.novelpractive.novel.Characters.Characters;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ public class NewNovelRequest {
     private String novel_title;
     private String author;
     private String genre;
-    private Character character;
-    private int amountOfCharacters = 0;
+    private Characters characters;
+    private int amountOfCharacters;
 
 }
