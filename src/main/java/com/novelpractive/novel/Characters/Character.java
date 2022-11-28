@@ -1,6 +1,7 @@
 package com.novelpractive.novel.Characters;
 
 import com.novelpractive.novel.Characters.dto.request.NewCharacterRequest;
+import com.novelpractive.novel.Novels.Novel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,7 @@ import javax.validation.constraints.NotNull;
 public class Character {
 
     @Id
-    @ManyToOne
-    @JoinColumn(name = "char_name")
+    @Column(name = "char_name")
     private String char_name;
 
     @NotNull
@@ -36,6 +36,10 @@ public class Character {
     @Column(name = "char_dislikes")
     private String char_dislikes;
 
+    @ManyToOne
+    @JoinColumn(name = "title")
+    private Novel novel;
+
 
     public Character(NewCharacterRequest newCharacterRequest){
 
@@ -44,6 +48,7 @@ public class Character {
         this.char_dislikes = newCharacterRequest.getChar_dislikes();
         this.char_likes = newCharacterRequest.getChar_likes();
         this.occupation = newCharacterRequest.getOccupation();
+        this.novel = newCharacterRequest.getNovel();
 
     }
 

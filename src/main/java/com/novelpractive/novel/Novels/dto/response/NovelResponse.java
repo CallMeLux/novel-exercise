@@ -10,13 +10,13 @@ public class NovelResponse {
     private String novel_title;
     private String author;
     private String genre;
-    private String char_name;
+    private Character character;
 
     public NovelResponse(Novel novel){
         this.novel_title = novel.getNovel_title();
         this.author = novel.getAuthor();
         this.genre = novel.getGenre();
-        this.char_name = novel.getChar_name();
+        this.character = novel.getCharacter();
     }
 
 }

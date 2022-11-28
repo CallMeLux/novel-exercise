@@ -1,5 +1,6 @@
 package com.novelpractive.novel.Novels;
 
+import com.novelpractive.novel.Characters.Character;
 import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface NovelRepository extends CrudRepository<Novel, String> {
 
-    @Query(value = "from Novel where novel_title = :novel_title")
+    @Query(value = "from Novel where novel_title = :title")
     Optional<Novel> checkTitle(String novel_title);
 
     @Query(value = "from Novel where author = :author")

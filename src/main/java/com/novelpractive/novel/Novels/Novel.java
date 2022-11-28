@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,8 +25,9 @@ public class Novel {
     private String genre;
 
     //change this to one to many and the type as Character
-    @OneToMany(mappedBy = "char_name", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Character> characters;
+    @OneToMany
+    @JoinColumn(name = "char_name")
+    private Character character;
 
     @Column(name = "amountOfCharacters")
     private int amountOfCharacters = 0;
@@ -37,7 +37,7 @@ public class Novel {
         this.novel_title = newNovelRequest.getNovel_title();
         this.author = newNovelRequest.getAuthor();
         this.genre = newNovelRequest.getGenre();
-        this.char_name = newNovelRequest.getChar_name();
+        this.character = newNovelRequest.getCharacter();
         this.amountOfCharacters = newNovelRequest.getAmountOfCharacters();
     }
 

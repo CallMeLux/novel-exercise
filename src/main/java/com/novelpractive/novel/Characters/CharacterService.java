@@ -36,6 +36,7 @@ public class CharacterService {
         newCharacter.setOccupation(newCharacter.getOccupation());
         newCharacter.setChar_likes(newCharacter.getChar_likes());
         newCharacter.setChar_dislikes(newCharacter.getChar_dislikes());
+        newCharacter.setNovel(newCharacter.getNovel());
 
         newCharacter = characterRepository.save(newCharacter);
 
@@ -43,9 +44,12 @@ public class CharacterService {
             throw new ResourceNotPersistedException("Character was not created.");
         }
 
+
+
         //validations
 
         isCharacterAvailable(newCharacterRequest.getChar_name());
+        isNovelPresent(String.valueOf(newCharacterRequest.getNovel()));
 
         return new CharacterResponse(newCharacter);
 
@@ -58,6 +62,15 @@ public class CharacterService {
         }
 
         return true;
+    }
+
+    @Transactional(readOnly = true)
+    private boolean isNovelPresent(String novel_title){
+        if(characterRepository.checkNovel(novel_title).isPresent()){
+            return true;
+        }
+        else
+            throw new InvalidUserInputException("This novel doesn't exist.");
     }
 
     @Transactional
@@ -112,5 +125,10 @@ public class CharacterService {
         return characterResponse;
     }
 
+
+    @Transactional(readOnly = true)
+    public List<CharacterResponse> findCharacterByNovel(String novel_title){
+        return ((Collection<Character>) characterRepository.findByNovel(novel_title)).stream().map(CharacterResponse::new).collect(Collectors.toList());
+    }
 
 }//end of class

@@ -1,6 +1,7 @@
 package com.novelpractive.novel.Novels;
 
 
+import com.novelpractive.novel.Characters.Character;
 import com.novelpractive.novel.Novels.dto.requests.EditNovelRequest;
 import com.novelpractive.novel.Novels.dto.requests.NewNovelRequest;
 import com.novelpractive.novel.Novels.dto.response.NovelResponse;
@@ -33,7 +34,7 @@ public class NovelService {
         newNovel.setNovel_title(newNovel.getNovel_title());
         newNovel.setGenre(newNovel.getGenre());
         newNovel.setAuthor(newNovel.getAuthor());
-        newNovel.setChar_name(newNovel.getChar_name());
+        //newNovel.setCharacter(newNovel.getCharacter());
         newNovel.setAmountOfCharacters(newNovel.getAmountOfCharacters());
 
         newNovel = novelRepository.save(newNovel);
@@ -100,8 +101,8 @@ public class NovelService {
             novel.setGenre(editNovelRequest.getGenre());
         }
 
-        if(editNovelRequest.getChar_name() != null){
-            novel.setChar_name((editNovelRequest.getChar_name()));
+        if(editNovelRequest.getCharacter() != null){
+            novel.setCharacter((editNovelRequest.getCharacter()));
         }
 
         if(editNovelRequest.getAmountOfCharacters() != 0 && editNovelRequest.getAmountOfCharacters() < 4){

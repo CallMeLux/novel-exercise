@@ -2,6 +2,7 @@ package com.novelpractive.novel.Characters.dto.request;
 
 
 import com.novelpractive.novel.Characters.Character;
+import com.novelpractive.novel.Novels.Novel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class EditCharacterRequest {
     private String occupation;
     private String char_likes;
     private String char_dislikes;
+    private Novel novel;
 
 }
