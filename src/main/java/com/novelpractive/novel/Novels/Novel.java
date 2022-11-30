@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -27,10 +28,7 @@ public class Novel {
     @Column(name = "genre")
     private String genre;
 
-    //change this to one to many and the type as Characters
-    @OneToMany
-    @JoinColumn(name = "char_name")
-    private Set<Characters> characters;
+
     @NotNull
     @Column(name = "amount_of_characters")
     private int amountOfCharacters;
@@ -40,7 +38,6 @@ public class Novel {
         this.novel_title = newNovelRequest.getNovel_title();
         this.author = newNovelRequest.getAuthor();
         this.genre = newNovelRequest.getGenre();
-        this.characters = (Set<Characters>) newNovelRequest.getCharacters();
         this.amountOfCharacters = newNovelRequest.getAmountOfCharacters();
     }
 

@@ -32,12 +32,6 @@ public class NovelService {
 
         Novel newNovel = new Novel(newNovelRequest);
 
-        newNovel.setNovel_title(newNovel.getNovel_title());
-        newNovel.setGenre(newNovel.getGenre());
-        newNovel.setAuthor(newNovel.getAuthor());
-        //newNovel.setCharacters(newNovel.getCharacters());
-        newNovel.setAmountOfCharacters(newNovel.getAmountOfCharacters());
-
 
         if(newNovel == null){
             throw new ResourceNotPersistedException("Registration of the Novel Failed.");
@@ -102,9 +96,6 @@ public class NovelService {
             novel.setGenre(editNovelRequest.getGenre());
         }
 
-//        if(editNovelRequest.getCharacters() != null){
-//            novel.setCharacters((Set<Characters>) editNovelRequest.getCharacters());
-//        }
 
         if(editNovelRequest.getAmountOfCharacters() != 0 && editNovelRequest.getAmountOfCharacters() < 4){
             novel.setAmountOfCharacters(editNovelRequest.getAmountOfCharacters());
@@ -135,7 +126,12 @@ public class NovelService {
         return ((Collection<Novel>) novelRepository.findByCharacter(char_name)).stream().map(NovelResponse::new).collect(Collectors.toList());
     }
 
-
+    @Transactional(readOnly = true)
+    public Novel findNovelById(String novel_title){
+        Novel foundNovel = novelRepository.findById(novel_title).orElseThrow(() -> new ResourceNotFoundException("No Novel found with this title."));
+        NovelResponse novelResponse = new NovelResponse(foundNovel);
+        return  foundNovel;
+    }
 
 
 }//end of class

@@ -30,6 +30,7 @@ public class CharacterController {
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public CharacterResponse addCharacter(@RequestBody @Valid NewCharacterRequest newCharacterRequest){
+        System.out.println(newCharacterRequest);
         return characterService.newCharacter(newCharacterRequest);
     }
 

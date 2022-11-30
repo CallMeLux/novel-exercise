@@ -2,6 +2,7 @@ package com.novelpractive.novel.Characters;
 
 import com.novelpractive.novel.Characters.dto.request.NewCharacterRequest;
 import com.novelpractive.novel.Novels.Novel;
+import com.novelpractive.novel.Novels.NovelService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,15 +42,14 @@ public class Characters {
     private Novel novel;
 
 
-    public Characters(NewCharacterRequest newCharacterRequest){
+    public Characters(NewCharacterRequest newCharacterRequest, Novel novel){
 
         this.char_name = newCharacterRequest.getChar_name();
         this.char_age = newCharacterRequest.getChar_age();
         this.char_dislikes = newCharacterRequest.getChar_dislikes();
         this.char_likes = newCharacterRequest.getChar_likes();
         this.occupation = newCharacterRequest.getOccupation();
-        this.novel = newCharacterRequest.getNovel();
-
+        this.novel = novel;
     }
 
 

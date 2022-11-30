@@ -3,6 +3,9 @@ package com.novelpractive.novel.Characters;
 import com.novelpractive.novel.Characters.dto.request.EditCharacterRequest;
 import com.novelpractive.novel.Characters.dto.request.NewCharacterRequest;
 import com.novelpractive.novel.Characters.dto.response.CharacterResponse;
+import com.novelpractive.novel.Novels.Novel;
+import com.novelpractive.novel.Novels.NovelRepository;
+import com.novelpractive.novel.Novels.NovelService;
 import com.novelpractive.novel.util.InvalidUserInputException;
 import com.novelpractive.novel.util.ResourceNotFoundException;
 import com.novelpractive.novel.util.ResourceNotPersistedException;
@@ -18,23 +21,24 @@ import java.util.stream.Collectors;
 public class CharacterService {
 
     private final CharacterRepository characterRepository;
+    private final NovelService novelService;
+    private final NovelRepository novelRepository;
 
     @Autowired
-    public CharacterService(CharacterRepository characterRepository){this.characterRepository = characterRepository ;}
+    public CharacterService(CharacterRepository characterRepository, NovelService novelService, NovelRepository novelRepository){
+        this.characterRepository = characterRepository ;
+        this.novelService = novelService;
+        this.novelRepository = novelRepository;
+    }
 
     @Transactional
     public CharacterResponse newCharacter(NewCharacterRequest newCharacterRequest){
 
         //submit to repository
 
-        Characters newCharacters = new Characters(newCharacterRequest);
+        Novel novel = novelService.findNovelById(newCharacterRequest.getNovel());
 
-        newCharacters.setChar_name(newCharacters.getChar_name());
-        newCharacters.setChar_age(newCharacters.getChar_age());
-        newCharacters.setOccupation(newCharacters.getOccupation());
-        newCharacters.setChar_likes(newCharacters.getChar_likes());
-        newCharacters.setChar_dislikes(newCharacters.getChar_dislikes());
-        newCharacters.setNovel(newCharacters.getNovel());
+        Characters newCharacters = new Characters(newCharacterRequest,novel);
 
         if(newCharacters == null){
             throw new ResourceNotPersistedException("Characters was not created.");
@@ -44,7 +48,7 @@ public class CharacterService {
         //validations
 
         isCharacterAvailable(newCharacterRequest.getChar_name());
-        isNovelPresent(String.valueOf(newCharacterRequest.getNovel()));
+        isNovelPresent(newCharacterRequest.getNovel());
 
 
         return new CharacterResponse(characterRepository.save(newCharacters));
@@ -61,8 +65,8 @@ public class CharacterService {
     }
 
     @Transactional(readOnly = true)
-    private boolean isNovelPresent(String novel_title){
-        if(characterRepository.checkNovel(novel_title).isPresent()){
+    private boolean isNovelPresent(String novel){
+        if(novelRepository.checkTitle(novel).isPresent()){
             return true;
         }
         else

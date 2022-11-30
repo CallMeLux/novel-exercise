@@ -11,14 +11,12 @@ public class NovelResponse {
     private String novel_title;
     private String author;
     private String genre;
-    //private Characters characters;
     private int amountOfCharacters;
 
     public NovelResponse(Novel novel){
         this.novel_title = novel.getNovel_title();
         this.author = novel.getAuthor();
         this.genre = novel.getGenre();
-        //this.characters = (Characters) novel.getCharacters();
         this.amountOfCharacters = novel.getAmountOfCharacters();
     }
 

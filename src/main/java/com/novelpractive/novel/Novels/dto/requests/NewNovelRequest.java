@@ -14,7 +14,6 @@ public class NewNovelRequest {
     private String novel_title;
     private String author;
     private String genre;
-    private Characters characters;
     private int amountOfCharacters;
 
 }

@@ -13,8 +13,6 @@ public interface CharacterRepository extends CrudRepository<Characters,String> {
     @Query(value = "from Characters where char_name = :char_name")
     Optional<Characters> findByName(String char_name);
 
-    @Query(value = "from Characters where title = :novel_title")
-    Optional<String> checkNovel(String novel_title);
 
     @Query(value = "from Characters where title = :novel_title")
     List<CharacterResponse> findByNovel(String novel_title);
