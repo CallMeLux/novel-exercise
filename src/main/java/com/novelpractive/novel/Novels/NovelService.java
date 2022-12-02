@@ -79,29 +79,31 @@ public class NovelService {
     @Transactional
     public void update(EditNovelRequest editNovelRequest){
 
-        Novel novel = novelRepository.checkTitle(editNovelRequest.getNovel_title()).orElseThrow(() -> new InvalidUserInputException("Novel not found."));
+        Novel foundnovel = novelRepository.checkTitle(editNovelRequest.getNovel_title()).orElseThrow(() -> new InvalidUserInputException("Novel not found."));
 
-        if(editNovelRequest.getNovel_title() != null){
-            if(isTitleAvailable(editNovelRequest.getNovel_title())){
-                novel.setNovel_title(editNovelRequest.getNovel_title());
-            }
-        }
+        //editing novel title removed for functionality until I decide whether or not to implement novel ids.
+
+//        if(editNovelRequest.getNovel_title() != null){
+//            if(isTitleAvailable(editNovelRequest.getNovel_title())){
+//                foundnovel.setNovel_title(editNovelRequest.getNovel_title());
+//            }
+//        }
 
         if(editNovelRequest.getAuthor() != null){
-            novel.setAuthor(editNovelRequest.getAuthor());
+            foundnovel.setAuthor(editNovelRequest.getAuthor());
         }
 
 
         if(editNovelRequest.getGenre() != null){
-            novel.setGenre(editNovelRequest.getGenre());
+            foundnovel.setGenre(editNovelRequest.getGenre());
         }
 
 
         if(editNovelRequest.getAmountOfCharacters() != 0 && editNovelRequest.getAmountOfCharacters() < 4){
-            novel.setAmountOfCharacters(editNovelRequest.getAmountOfCharacters());
+            foundnovel.setAmountOfCharacters(editNovelRequest.getAmountOfCharacters());
         }
 
-
+        novelRepository.save(foundnovel);
     }//end update
 
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/characters")
@@ -19,9 +20,6 @@ public class CharacterController {
 
     @Autowired
     public CharacterController(CharacterService characterService){this.characterService = characterService;}
-
-    @GetMapping("/find/{char_name}")
-    public CharacterResponse getCharacter(@PathVariable String char_name){return characterService.findById(char_name);}
 
     @GetMapping("/all")
     public List<CharacterResponse> getAllCharacters(){return characterService.findAll();}
@@ -43,7 +41,7 @@ public class CharacterController {
     @DeleteMapping("delete/{char_name}")
     public String delete(@PathVariable String char_name){
         characterService.remove(char_name);
-        return "Characters has been removed.";
+        return "Character has been removed.";
     }
 
     @GetMapping
@@ -53,9 +51,10 @@ public class CharacterController {
     public CharacterResponse findById(@PathVariable String char_name){return characterService.findById(char_name); }
 
 
-    @GetMapping("/character/{novel_title}")
+    @GetMapping("/find/{novel_title}")
     public List<CharacterResponse> findCharacterByNovel(@PathVariable String novel_title){
         return characterService.findCharacterByNovel(novel_title);
+
     }
 
 

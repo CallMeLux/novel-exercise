@@ -35,8 +35,15 @@ public class NovelController {
 
     @PutMapping
     public String update(@RequestBody EditNovelRequest editNovelRequest){
-     novelService.update(editNovelRequest);
-     return "Novel was updated.";
+     Novel updatedNovel = novelService.findNovelById(editNovelRequest.getNovel_title());
+     if(updatedNovel != null){
+         novelService.update(editNovelRequest);
+         return "Novel was updated.";
+     }
+     else{
+         return "Novel not found";
+     }
+
     }
 
     @DeleteMapping("delete/{novel_title}")

@@ -15,7 +15,7 @@ public interface CharacterRepository extends CrudRepository<Characters,String> {
 
 
     @Query(value = "from Characters where title = :novel_title")
-    List<CharacterResponse> findByNovel(String novel_title);
+    Iterable<Characters> findByNovel(String novel_title);
 
     @Override
     boolean existsById(String s);

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -128,7 +129,7 @@ public class CharacterService {
 
     @Transactional(readOnly = true)
     public List<CharacterResponse> findCharacterByNovel(String novel_title){
-        return characterRepository.findByNovel(novel_title);
+        return((List<Characters>) characterRepository.findByNovel(novel_title)).stream().map(CharacterResponse::new).collect(Collectors.toList());
     }
 
 }//end of class
