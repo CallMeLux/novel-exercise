@@ -84,28 +84,30 @@ public class CharacterService {
     @Transactional
     public void update(EditCharacterRequest editCharacterRequest){
 
-        Characters characters = characterRepository.findByName(editCharacterRequest.getChar_name()).orElseThrow(() -> new InvalidUserInputException("Characters not found."));
+        Characters foundcharacters = characterRepository.findByName(editCharacterRequest.getChar_name()).orElseThrow(() -> new InvalidUserInputException("Characters not found."));
 
-        if(editCharacterRequest.getChar_name() != null){
-            if(isCharacterAvailable(editCharacterRequest.getChar_name())){
-                characters.setChar_name(editCharacterRequest.getChar_name());
-            }
-        }
+        //removed edit to names until i decide on adding ids
+
+//        if(editCharacterRequest.getChar_name() != null){
+//            if(isCharacterAvailable(editCharacterRequest.getChar_name())){
+//                foundcharacters.setChar_name(editCharacterRequest.getChar_name());
+//            }
+//        }
 
         if(editCharacterRequest.getChar_age() != 0){
-            characters.setChar_age(editCharacterRequest.getChar_age());
+            foundcharacters.setChar_age(editCharacterRequest.getChar_age());
         }
 
         if(editCharacterRequest.getOccupation() != null){
-            characters.setOccupation(editCharacterRequest.getOccupation());
+            foundcharacters.setOccupation(editCharacterRequest.getOccupation());
         }
 
         if(editCharacterRequest.getChar_likes() != null){
-            characters.setChar_likes(editCharacterRequest.getChar_likes());
+            foundcharacters.setChar_likes(editCharacterRequest.getChar_likes());
         }
 
         if(editCharacterRequest.getChar_dislikes() != null){
-            characters.setChar_dislikes(editCharacterRequest.getChar_dislikes());
+            foundcharacters.setChar_dislikes(editCharacterRequest.getChar_dislikes());
         }
 
     }//end update

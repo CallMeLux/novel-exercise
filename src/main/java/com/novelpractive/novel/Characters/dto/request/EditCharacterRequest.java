@@ -17,6 +17,6 @@ public class EditCharacterRequest {
     private String occupation;
     private String char_likes;
     private String char_dislikes;
-    private Novel novel;
+    private String novel;
 
 }

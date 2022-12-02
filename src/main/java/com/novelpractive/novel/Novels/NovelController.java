@@ -20,10 +20,6 @@ public class NovelController {
         this.novelService = novelService;
     }
 
-
-    @GetMapping("/find/{novel_title}")
-    public NovelResponse getNovel(@PathVariable String novel_title){return novelService.findById(novel_title); }
-
     @GetMapping("/all")
     public List<NovelResponse> getAllNovels(){return novelService.findAll(); }
 
@@ -63,7 +59,7 @@ public class NovelController {
         return novelService.findById(novel_title);
     }
 
-    @GetMapping("/novel/{char_name}")
+    @GetMapping("/find/{char_name}")
     public List<NovelResponse> findNovelByCharacter(@PathVariable String char_name){
         return novelService.findNovelByCharacter(char_name);
     }
