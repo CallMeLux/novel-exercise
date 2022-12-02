@@ -28,6 +28,9 @@ public class Novel {
     @Column(name = "genre")
     private String genre;
 
+    @ManyToOne
+    @JoinColumn(name = "char_name")
+    private Characters characters;
 
     @NotNull
     @Column(name = "amount_of_characters")
