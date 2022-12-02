@@ -76,7 +76,7 @@ public class CharacterService {
     @Transactional
     public void remove(String char_name){
         Characters characters = characterRepository.findByName(char_name).orElseThrow(() -> new InvalidUserInputException("Characters not found."));
-        characterRepository.save(characters);
+        characterRepository.delete(characters);
     }//end remove
 
 

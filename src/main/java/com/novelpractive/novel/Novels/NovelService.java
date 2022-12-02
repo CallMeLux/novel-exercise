@@ -71,7 +71,7 @@ public class NovelService {
     @Transactional
     public void remove(String novel_title){
         Novel novel = novelRepository.checkTitle(novel_title).orElseThrow(() -> new InvalidUserInputException("Novel not found."));
-        novelRepository.save(novel);
+        novelRepository.delete(novel);
     }//end remove
 
 
